@@ -83,20 +83,18 @@ int swToNum(int sw) {
 void demoScreen() {
   cls();                                            // LCDをクリアする
   locateXY(0,0); putStr("MP3 Player demo");
-  for (int i=1; i<=5; i=i+1) {                      // スイッチ1〜5に付いて
+  for (int i=1; i<=6; i=i+1) {                      // スイッチ1〜5に付いて
     locateXY(2,i+1);
     putCh(chr(ord('0')+i));                         // スイッチの番号
     putStr(":");
     char[] fname = mp3FilesGetName(i);              // 対応するファイル名
     if (fname!=null) putStr(fname);
   }
-  locateXY(2,7);
-  putStr("6:stop");                                 // 6番のスイッチ
 }
 
 void asta(int y) {
-  demoScreen();
-  locateXY(0, y+1);
+  //demoScreen();
+  locateXY(0, (y%6)+1);
   putCh('*');
 }
 
@@ -109,6 +107,7 @@ public void shellMain() {
   spiResetMp3();                                    //   プロセスが実行する
   mp3FilesInit();                                   // ファイル一覧を作る
   demoScreen();                                     // 画面を初期化
+  int cnt = 1;                                      // カウント
   for (;;) {
     int sw = readSw();
     int num = swToNum(sw);
@@ -116,11 +115,25 @@ public void shellMain() {
       dbgPutStr("stop\n");
       demoScreen();                                 // 画面を初期化
       stop();
-    } else if (num>0 && mp3FilesGetName(num)!=null) { // ファイルと対応するボタン
-      demoScreen();                                 // 画面を初期化
-      asta(num);                                    // 再生中の曲に印を表示
-      play(mp3FilesGetPath(num));                   // 再生開始
-      dbgPutStr(mp3FilesGetPath(num));
+    } else if (num==1) {                            //1
+      if (cnt<1) {
+        cnt==1;
+        demoScreen();
+        asta(cnt);
+      } else {
+        cnt=cnt-1;
+        demoScreen();
+        asta(cnt);
+      }
+    } else if (num==5) {                            //5
+      if (mp3FilesGetName(cnt+1)!=null) {
+        cnt=cnt+1;
+        demoScreen();
+        asta(cnt);
+      }
+    } else if (num==2 && mp3FilesGetName(cnt)!=null) {                            //2
+      play(mp3FilesGetPath(cnt));                   // 再生開始
+      dbgPutStr(mp3FilesGetPath(cnt));
       dbgPutStr("\n");
     }
     sleep(10);                                      // 10ms に一度
