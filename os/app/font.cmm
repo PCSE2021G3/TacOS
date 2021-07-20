@@ -95,6 +95,7 @@ char[][] fontDat = {
     { '\x41','\x41','\x77','\x3e','\x08','\x08','\x00','\x00' },  // 7d(})
     { '\x02','\x03','\x01','\x03','\x02','\x03','\x01','\x00' }   // 7e(~)
   };
+char[] fontDat2 = { '\xff','\xff','\xff','\xff','\xff','\xff','\xff','\x00' };
 public char[] font(char code) {
   if (ord(code)<=0x20) return fontDat[0];
   if (ord(code)>=0x7f) return fontDat[0];

@@ -95,7 +95,7 @@ void demoScreen() {
 void asta(int y) {
   //demoScreen();
   locateXY(0, (y%6)+1);
-  putCh('*');
+  putCh2();
 }
 
 //-----------------------------------------------------------------------------
@@ -108,6 +108,7 @@ public void shellMain() {
   mp3FilesInit();                                   // ファイル一覧を作る
   demoScreen();                                     // 画面を初期化
   int cnt = 1;                                      // カウント
+  asta(cnt);
   for (;;) {
     int sw = readSw();
     int num = swToNum(sw);
@@ -116,7 +117,7 @@ public void shellMain() {
       demoScreen();                                 // 画面を初期化
       stop();
     } else if (num==1) {                            //1
-      if (cnt<1) {
+      if (cnt<=1) {
         cnt==1;
         demoScreen();
         asta(cnt);

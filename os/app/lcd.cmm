@@ -40,6 +40,8 @@ char[] locateCom = { '\xb0',   // page address
                      '\x00',   // column address Lo = 0x00
                      '\xff' }; // EOF
 
+char[] fontDat2 = { '\xff','\xff','\xff','\xff','\xff','\xff','\xff','\x00' };
+
 // 液晶上でカーソルを(x,y)に移動
 public void locateXY(int x, int y) {
   int x8 = x * 8;
@@ -52,6 +54,15 @@ public void locateXY(int x, int y) {
 // カーソル位置に１文字表示
 public void putCh(char c) {
   spiWriteLcdDat(font(c), 8);
+}
+
+public char[] font2() {
+  return fontDat2;
+}
+
+// １文字表示
+public void putCh2() {
+  spiWriteLcdDat(font2(), 8);
 }
 
 // カーソル位置に文字列表示
